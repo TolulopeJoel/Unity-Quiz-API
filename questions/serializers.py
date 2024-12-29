@@ -6,8 +6,8 @@ from .models import ExplanationStep, Option, Question
 
 
 class StepSerializer(serializers.ModelSerializer):
-    Title = serializers.CharField(source='title')
-    Result = serializers.CharField(source='result')
+    Title = serializers.CharField(source='title', trim_whitespace=False)
+    Result = serializers.CharField(source='result', trim_whitespace=False)
     ImageUrl = serializers.URLField(
         source='image_url',
         required=False
@@ -32,8 +32,8 @@ class OptionSerializer(serializers.ModelSerializer):
 
 
 class QuestionSerializer(serializers.ModelSerializer):
-    Question = serializers.CharField(source='text')
-    Solution = serializers.CharField(source='solution')
+    Question = serializers.CharField(source='text', trim_whitespace=False)
+    Solution = serializers.CharField(source='solution', trim_whitespace=False)
     CorrectAnswer = serializers.SerializerMethodField(read_only=True)
     Steps = StepSerializer(
         many=True,
