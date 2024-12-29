@@ -1,4 +1,3 @@
-from django.core.validators import MinValueValidator
 from django.db import models
 
 
@@ -8,6 +7,7 @@ class TimeStampedModel(models.Model):
 
     class Meta:
         abstract = True
+        ordering = ('-updated_at',)
 
 
 class Question(TimeStampedModel):
@@ -21,14 +21,12 @@ class ExplanationStep(TimeStampedModel):
     question = models.ForeignKey(
         "Question", on_delete=models.CASCADE, related_name="steps"
     )
-    step_number = models.IntegerField(validators=[MinValueValidator(1)])
 
     title = models.CharField(max_length=255)
     result = models.TextField()
     image_url = models.URLField(null=True, blank=True)
 
     class Meta:
-        ordering = ("step_number",)
         unique_together = ("question", "title", "result")
 
 
