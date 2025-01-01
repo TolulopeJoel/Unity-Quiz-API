@@ -99,3 +99,8 @@ class QuestionSerializer(serializers.ModelSerializer):
                 question.tags.add(tag_obj)
 
             return question
+    
+    def to_representation(self, instance):
+        data =  super().to_representation(instance)
+        data['CorrectAnswer'] = instance.options.all().get(is_correct=True).text
+        return data
