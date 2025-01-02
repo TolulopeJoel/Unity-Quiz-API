@@ -37,7 +37,7 @@ class ErrorAPIResponseMiddleware:
         if response.status_code >= 400:
             response_data['message'] = self._extract_error_message(response_data)
 
-        self._remove_error_fields(response_data)
+            self._remove_error_fields(response_data)
 
         return response_data
 
