@@ -31,12 +31,12 @@ class ErrorAPIResponseMiddleware:
         """
         Format the API response and remove field names with error messages.
         """
-        response_data = response.data or {}
-        response_data.setdefault('status', response.status_code)
-
+        response_data = response.data
         if response.status_code >= 400:
-            response_data['message'] = self._extract_error_message(response_data)
+            response_data = response_data or {}
+            response_data.setdefault('status', response.status_code)
 
+            response_data['message'] = self._extract_error_message(response_data)
             self._remove_error_fields(response_data)
 
         return response_data
